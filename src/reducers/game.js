@@ -13,7 +13,8 @@ const initialState = {
     [[{ score: 2, id: 2 }], [], [], [{ score: 2, id: 3 }]],
     [[], [], [], []]
   ],
-  nextTileId: 8
+  nextTileId: 8,
+  score: 0
 };
 
 function buildTraversals(direction) {
@@ -37,6 +38,7 @@ export const game = (state = initialState, action) => {
       const nextBoard = state.board.map(row =>
         row.map(cell => cell.splice(-1, 1))
       );
+      let { score } = state;
 
       const traversals = buildTraversals(action.direction);
       traversals.forEach(traversal => {
@@ -74,6 +76,10 @@ export const game = (state = initialState, action) => {
               nextBoard[fRow][fCol] = [];
 
               lastMerge = currentIndex;
+              score += Math.pow(
+                2,
+                nextBoard[tRow][tCol][nextBoard[tRow][tCol].length - 1].score
+              );
 
               continue;
             }
@@ -81,7 +87,7 @@ export const game = (state = initialState, action) => {
         }
       });
 
-      return { ...state, board: nextBoard };
+      return { ...state, board: nextBoard, score };
 
     default:
       return state;
