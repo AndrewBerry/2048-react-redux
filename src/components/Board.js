@@ -103,5 +103,6 @@ Board.propTypes = {
       x: propTypes.number.isRequired,
       y: propTypes.number.isRequired
     })
-  ).isRequired
+  ).isRequired,
+  shiftBoard: propTypes.func.isRequired
 };
