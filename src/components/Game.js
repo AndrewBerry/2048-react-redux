@@ -6,6 +6,7 @@ import { Board } from "./Board";
 const StyledGame = styled.div`
   max-width: 500px;
   margin: auto;
+  padding: 0 10px;
 `;
 
 export const Game = props => (
