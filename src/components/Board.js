@@ -36,7 +36,6 @@ export class Board extends React.Component {
   constructor(props) {
     super(props);
 
-    this.placeholders = {};
     this.onKeyPress = this.onKeyPress.bind(this);
   }
 
@@ -76,15 +75,11 @@ export class Board extends React.Component {
             key={`${x},${y}`}
             x={x}
             y={y}
-            innerRef={placeholder => {
-              this.placeholders[`${x},${y}`] = placeholder;
-            }}
           />
         );
       }
     }
 
-    console.log(this.placeholders);
     return (
       <StyledBoard>
         {tilePlaceholders}
