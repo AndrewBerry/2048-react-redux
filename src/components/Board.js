@@ -1,43 +1,40 @@
 import React from "react";
 import propTypes from "prop-types";
 import styled from "styled-components";
+import throttle from "lodash.throttle";
 
-import { GAME_TILE_SPACING, GAME_GRID_SIZE } from "../constants/game";
+import { GAME_TILE_SPACING, GAME_GRID_SIZE, GAME_MOVE_COOLDOWN } from "../constants/game";
 import { Tile } from "./Tile";
 
 const StyledBoard = styled.div`
-  display: grid;
-  grid-template: repeat(${GAME_GRID_SIZE}, 1fr) / repeat(${GAME_GRID_SIZE}, 1fr);
-  grid-gap: ${GAME_TILE_SPACING}px;
-  padding: ${GAME_TILE_SPACING}px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
   max-width: 500px;
   max-height: 500px;
   width: 100%;
   height: 100vw;
 
   background-color: #bbada0;
+  border: 5px solid #bbada0;
   border-radius: 6px;
 `;
 
+const tileWidth = Math.floor(100 / GAME_GRID_SIZE);
 const StyledTilePlaceholder = styled.div`
+  position: absolute;
+  width: ${tileWidth - GAME_TILE_SPACING * 2}%;
+  height: ${tileWidth - GAME_TILE_SPACING * 2}%;
+  margin: ${GAME_TILE_SPACING}%;
+  top: ${props => props.y * tileWidth}%;
+  left: ${props => props.x * tileWidth}%;
+
   background-color: #cdc1b5;
   border-radius: 3px;
-
-  grid-column: ${props => props.x + 1} / span 1;
-  grid-row: ${props => props.y + 1} / span 1;
 `;
 
 export class Board extends React.Component {
   constructor(props) {
     super(props);
-
-    this.placeholders = {};
-    this.onKeyPress = this.onKeyPress.bind(this);
+    this.onKeyPress = throttle(this.onKeyPress.bind(this), GAME_MOVE_COOLDOWN);
   }
 
   onKeyPress(e) {
@@ -57,7 +54,7 @@ export class Board extends React.Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     document.body.addEventListener("keydown", this.onKeyPress);
   }
 
@@ -72,19 +69,11 @@ export class Board extends React.Component {
     for (let x = 0; x < GAME_GRID_SIZE; x += 1) {
       for (let y = 0; y < GAME_GRID_SIZE; y += 1) {
         tilePlaceholders.push(
-          <StyledTilePlaceholder
-            key={`${x},${y}`}
-            x={x}
-            y={y}
-            innerRef={placeholder => {
-              this.placeholders[`${x},${y}`] = placeholder;
-            }}
-          />
+          <StyledTilePlaceholder key={`${x},${y}`} x={x} y={y} />
         );
       }
     }
 
-    console.log(this.placeholders);
     return (
       <StyledBoard>
         {tilePlaceholders}

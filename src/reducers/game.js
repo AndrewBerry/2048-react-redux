@@ -3,15 +3,10 @@ import { GAME_GRID_SIZE } from "../constants/game";
 
 const initialState = {
   board: [
-    [
-      [{ score: 8, id: 4 }],
-      [{ score: 8, id: 5 }],
-      [{ score: 8, id: 6 }],
-      [{ score: 8, id: 7 }]
-    ],
-    [[], [{ score: 8, id: 0 }, { score: 1, id: 1 }], [], []],
-    [[{ score: 2, id: 2 }], [], [], [{ score: 2, id: 3 }]],
-    [[], [], [], []]
+    [ [], [], [], [] ],
+    [ [], [], [{id: 1, score: 1}], [] ],
+    [ [], [{id: 2, score: 1}], [], [] ],
+    [ [], [], [], [] ],
   ],
   nextTileId: 8,
   score: 0
