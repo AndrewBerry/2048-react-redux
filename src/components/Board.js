@@ -3,7 +3,11 @@ import propTypes from "prop-types";
 import styled from "styled-components";
 import throttle from "lodash.throttle";
 
-import { GAME_TILE_SPACING, GAME_GRID_SIZE, GAME_MOVE_COOLDOWN } from "../constants/game";
+import {
+  GAME_TILE_SPACING,
+  GAME_GRID_SIZE,
+  GAME_MOVE_COOLDOWN
+} from "../constants/game";
 import { Tile } from "./Tile";
 
 const StyledBoard = styled.div`

@@ -1,88 +1,55 @@
-import * as actionTypes from "../constants/actionTypes";
-import { GAME_GRID_SIZE } from "../constants/game";
+import {
+  getEmptyTiles,
+  addTileToBoard,
+  removeDeadTiles,
+  attemptToMoveBoard
+} from "../utils/game";
+
+import { SHIFT_BOARD } from "../constants/actionTypes";
 
 const initialState = {
   board: [
-    [ [], [], [], [] ],
-    [ [], [], [{id: 1, score: 1}], [] ],
-    [ [], [{id: 2, score: 1}], [], [] ],
-    [ [], [], [], [] ],
+    [[], [], [], []],
+    [[], [], [{ id: 1, score: 1 }], []],
+    [[], [{ id: 2, score: 1 }], [], []],
+    [[], [], [], []]
   ],
-  nextTileId: 8,
+  nextTileId: 3,
   score: 0
 };
 
-function buildTraversals(direction) {
-  const isLongRow = direction === "l" || direction === "r";
-
-  return Array.from({ length: GAME_GRID_SIZE }, (v, long) => {
-    const traversal = Array.from({ length: GAME_GRID_SIZE }, (vv, short) => ({
-      [isLongRow ? "row" : "col"]: long,
-      [isLongRow ? "col" : "row"]: short
-    }));
-
-    return direction === "r" || direction === "d"
-      ? traversal.reverse()
-      : traversal;
-  });
-}
-
 export const game = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SHIFT_BOARD:
-      const nextBoard = state.board.map(row =>
-        row.map(cell => cell.splice(-1, 1))
+    case SHIFT_BOARD:
+      const activeBoard = removeDeadTiles(state.board);
+      const moveAttempt = attemptToMoveBoard(activeBoard, action.direction);
+
+      if (!moveAttempt) {
+        return state;
+      }
+      const { board: movedBoard, moveScore } = moveAttempt;
+
+      const emptyTiles = getEmptyTiles(movedBoard);
+
+      if (emptyTiles.length === 0) {
+        return state; // lose?
+      }
+
+      const newTilePosition =
+        emptyTiles[action.nextTileIndex % emptyTiles.length];
+      const boardWithNewTile = addTileToBoard(
+        movedBoard,
+        newTilePosition,
+        action.score,
+        state.nextTileId
       );
-      let { score } = state;
 
-      const traversals = buildTraversals(action.direction);
-      traversals.forEach(traversal => {
-        let lastMerge = 0;
-        for (let startIndex = 1; startIndex < GAME_GRID_SIZE; startIndex += 1) {
-          for (
-            let currentIndex = startIndex;
-            currentIndex > lastMerge;
-            currentIndex -= 1
-          ) {
-            const { col: fCol, row: fRow } = traversal[currentIndex];
-            const { col: tCol, row: tRow } = traversal[currentIndex - 1];
-            const from = nextBoard[fRow][fCol];
-            const to = nextBoard[tRow][tCol];
-
-            if (from.length === 0) {
-              continue;
-            }
-
-            if (to.length === 0) {
-              nextBoard[tRow][tCol] = from;
-              nextBoard[fRow][fCol] = [];
-
-              continue;
-            }
-
-            if (to[to.length - 1].score === from[from.length - 1].score) {
-              nextBoard[tRow][tCol] = [
-                ...nextBoard[tRow][tCol],
-                ...nextBoard[fRow][fCol]
-              ];
-              nextBoard[tRow][tCol][
-                nextBoard[tRow][tCol].length - 1
-              ].score += 1;
-              nextBoard[fRow][fCol] = [];
-
-              lastMerge = currentIndex;
-              score += Math.pow(
-                2,
-                nextBoard[tRow][tCol][nextBoard[tRow][tCol].length - 1].score
-              );
-
-              continue;
-            }
-          }
-        }
-      });
-
-      return { ...state, board: nextBoard, score };
+      return {
+        ...state,
+        score: state.score + moveScore,
+        board: boardWithNewTile,
+        nextTileId: state.nextTileId + 1
+      };
 
     default:
       return state;

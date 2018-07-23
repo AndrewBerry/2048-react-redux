@@ -1,6 +1,6 @@
 import React from "react";
 import propTypes from "prop-types";
-import styled from "styled-components";
+import { default as styled, keyframes } from "styled-components";
 
 import {
   GAME_TILE_SPACING,
@@ -15,6 +15,21 @@ import {
 } from "../constants/game";
 
 const tileWidth = Math.floor(100 / GAME_GRID_SIZE);
+
+const tilePopAnimation = keyframes`
+  0% {
+    transform: scale(0);
+  }
+
+  80% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+`;
+
 const StyledTile = styled.div`
   position: absolute;
   width: ${tileWidth - GAME_TILE_SPACING * 2}%;
@@ -29,7 +44,10 @@ const StyledTile = styled.div`
   font-size: 32px;
   text-align: center;
 
-  transition: top ${GAME_MOVE_COOLDOWN}ms ease-out, left ${GAME_MOVE_COOLDOWN}ms ease-out, transform ${Math.floor(GAME_MOVE_COOLDOWN * 0.75)}ms ease-in;
+  animation: ${tilePopAnimation} 300ms ease-out;
+  transition: top ${GAME_MOVE_COOLDOWN}ms ease-out,
+    left ${GAME_MOVE_COOLDOWN}ms ease-out,
+    transform ${Math.floor(GAME_MOVE_COOLDOWN * 0.75)}ms ease-in;
   transform: ${props => (!props.active ? "scale(0);" : "")};
 `;
 

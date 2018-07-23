@@ -1,3 +1,2 @@
 export const SHIFT_BOARD = "SHIFT_BOARD";
-export const UNDO = "UNDO";
-export const REDO = "REDO";
+export const ADD_TILE = "ADD_TILE";

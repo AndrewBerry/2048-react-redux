@@ -1,7 +1,7 @@
 export const GAME_GRID_SIZE = 4;
 export const GAME_TILE_SPACING = 1.5;
 
-export const GAME_MOVE_COOLDOWN = 100; // ms
+export const GAME_MOVE_COOLDOWN = 150; // ms
 
 export const GAME_TILE_BG_COLORS = {
   "2": "rgb(234, 222, 210)",
@@ -41,6 +41,7 @@ export const GAME_TILE_FONT_SIZES = {
   "1": 70,
   "2": 60,
   "3": 45,
-  "4": 40
+  "4": 40,
+  "5": 30,
 };
-export const GAME_TILE_FONT_SIZE_DEFAULT = 30;
+export const GAME_TILE_FONT_SIZE_DEFAULT = 24;

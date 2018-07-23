@@ -5,7 +5,10 @@ import { createStore } from "redux";
 import { game } from "./reducers/game";
 import { GameContainer } from "./containers/GameContainer";
 
-const store = createStore(game);
+const store = createStore(
+  game,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 class App extends Component {
   render() {
