@@ -30,17 +30,20 @@ const tilePopAnimation = keyframes`
   }
 `;
 
-const StyledTile = styled.div`
+const StyledTile = styled.div.attrs({
+  style: props => ({
+    top: `${props.y * tileWidth}%`,
+    left: `${props.x * tileWidth}%`,
+    backgroundColor: props.backgroundColor,
+    transform: props.active ? null : "scale(0)",
+  }),
+})`
   position: absolute;
   width: ${tileWidth - GAME_TILE_SPACING * 2}%;
   height: ${tileWidth - GAME_TILE_SPACING * 2}%;
   margin: ${GAME_TILE_SPACING}%;
 
-  top: ${props => props.y * tileWidth}%;
-  left: ${props => props.x * tileWidth}%;
-
   border-radius: 3px;
-  background-color: ${props => props.backgroundColor};
   font-size: 32px;
   text-align: center;
 
@@ -48,16 +51,18 @@ const StyledTile = styled.div`
   transition: top ${GAME_MOVE_COOLDOWN}ms ease-out,
     left ${GAME_MOVE_COOLDOWN}ms ease-out,
     transform ${Math.floor(GAME_MOVE_COOLDOWN * 0.75)}ms ease-in;
-  transform: ${props => (!props.active ? "scale(0);" : "")};
 `;
 
-const StyledTileLabel = styled.div`
+const StyledTileLabel = styled.div.attrs({
+  style: props => ({
+    color: props.fontColor,
+    fontSize: props.fontSize,
+  }),
+})`
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: ${props => props.fontColor};
-  font-size: ${props => `${props.fontSize}px`};
 
   @media (max-width: 415px) {
     font-size: ${props => `${Math.floor(props.fontSize * 0.75)}px`};
