@@ -47,7 +47,7 @@ const StyledTile = styled.div.attrs({
   font-size: 32px;
   text-align: center;
 
-  animation: ${tilePopAnimation} 300ms ease-out;
+  animation: ${tilePopAnimation} ${GAME_MOVE_COOLDOWN * 2}ms ease-out;
   transition: top ${GAME_MOVE_COOLDOWN}ms ease-out,
     left ${GAME_MOVE_COOLDOWN}ms ease-out,
     transform ${Math.floor(GAME_MOVE_COOLDOWN * 0.75)}ms ease-in;
