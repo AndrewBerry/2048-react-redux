@@ -58,7 +58,6 @@ const StyledTile = styled.div.attrs({
 const StyledTileLabel = styled.div.attrs({
   style: props => ({
     color: props.fontColor,
-    fontSize: props.fontSize,
   }),
 })`
   position: relative;
@@ -67,10 +66,20 @@ const StyledTileLabel = styled.div.attrs({
   transform: translate(-50%, -50%);
   touch-action: none;
   user-select: none;
+  font-size: ${props => Math.floor(props.fontSize * 0.25)}px;
 
-  @media (max-width: 415px) {
+  @media (min-width: 150px) {
+    font-size: ${props => `${Math.floor(props.fontSize * 0.5)}px`};
+  }
+
+  @media (min-width: 250px) {
     font-size: ${props => `${Math.floor(props.fontSize * 0.75)}px`};
   }
+
+  @media (min-width: 415px) {
+    font-size: ${props => `${props.fontSize}px`};
+  }
+
 `;
 
 export const Tile = ({ active, score, x, y }) => {
