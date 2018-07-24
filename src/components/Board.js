@@ -6,7 +6,8 @@ import throttle from "lodash.throttle";
 import {
   GAME_TILE_SPACING,
   GAME_GRID_SIZE,
-  GAME_MOVE_COOLDOWN
+  GAME_MOVE_COOLDOWN,
+  GAME_SWIPE_MIN_DISTANCE
 } from "../constants/game";
 import { Tile } from "./Tile";
 
@@ -20,6 +21,9 @@ const StyledBoard = styled.div`
   background-color: #bbada0;
   border: 5px solid #bbada0;
   border-radius: 6px;
+
+  touch-action: none;
+  user-select: none;
 `;
 
 const tileWidth = Math.floor(100 / GAME_GRID_SIZE);
@@ -33,15 +37,23 @@ const StyledTilePlaceholder = styled.div`
 
   background-color: #cdc1b5;
   border-radius: 3px;
+  touch-action: none;
+  user-select: none;
 `;
 
 export class Board extends React.Component {
   constructor(props) {
     super(props);
-    this.onKeyPress = throttle(this.onKeyPress.bind(this), GAME_MOVE_COOLDOWN);
+    this.board = React.createRef();
+
+    this.handleKeyPress = throttle(this.handleKeyPress.bind(this), GAME_MOVE_COOLDOWN);
+    this.handleSwipeStart = this.handleSwipeStart.bind(this);
+    this.handleSwipeMove = this.handleSwipeMove.bind(this);
+    this.handleSwipeEnd = throttle(this.handleSwipeEnd.bind(this), GAME_MOVE_COOLDOWN);
+    this.swipeStart = null;
   }
 
-  onKeyPress(e) {
+  handleKeyPress(e) {
     const { shiftBoard } = this.props;
 
     const keyBinds = {
@@ -58,12 +70,50 @@ export class Board extends React.Component {
     });
   }
 
+  handleSwipeStart(e) {
+    if (!e.touches || e.touches.length > 1) {
+      return;
+    }
+
+    const {clientX, clientY} = e.touches[0];
+    this.swipeStart = {clientX, clientY};
+
+    e.preventDefault();
+  }
+
+  handleSwipeMove(e) {
+    e.preventDefault();
+  }
+
+  handleSwipeEnd(e) {
+    if (!this.swipeStart) {
+      return;
+    }
+
+    const {clientX, clientY} = e.changedTouches[0];
+    const deltaX = clientX - this.swipeStart.clientX;
+    const deltaY = clientY - this.swipeStart.clientY;
+    const absDeltaX = Math.abs(deltaX);
+    const absDeltaY = Math.abs(deltaY);
+
+    if (Math.max(absDeltaX, absDeltaY) < GAME_SWIPE_MIN_DISTANCE) {
+      return;
+    }
+
+    const { shiftBoard } = this.props;
+    shiftBoard(absDeltaX > absDeltaY ? (deltaX > 0 ? 'r' : 'l') : (deltaY > 0 ? 'd' : 'u'));
+  }
+
   componentDidMount() {
-    document.body.addEventListener("keydown", this.onKeyPress);
+    document.body.addEventListener("keydown", this.handleKeyPress);
+
+    this.board.current.addEventListener("touchstart", this.handleSwipeStart);
+    this.board.current.addEventListener("touchmove", this.handleSwipeMove);
+    this.board.current.addEventListener("touchend", this.handleSwipeEnd);
   }
 
   componentWillUnmount() {
-    document.body.removeEventListener("keydown", this.onKeyPress);
+    document.body.removeEventListener("keydown", this.handleKeyPress);
   }
 
   render() {
@@ -79,7 +129,7 @@ export class Board extends React.Component {
     }
 
     return (
-      <StyledBoard>
+      <StyledBoard innerRef={this.board}>
         {tilePlaceholders}
         {tiles.map(tile => <Tile key={tile.id} {...tile} />)}
       </StyledBoard>

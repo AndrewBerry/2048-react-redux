@@ -51,6 +51,8 @@ const StyledTile = styled.div.attrs({
   transition: top ${GAME_MOVE_COOLDOWN}ms ease-out,
     left ${GAME_MOVE_COOLDOWN}ms ease-out,
     transform ${Math.floor(GAME_MOVE_COOLDOWN * 0.75)}ms ease-in;
+  touch-action: none;
+  user-select: none;
 `;
 
 const StyledTileLabel = styled.div.attrs({
@@ -63,6 +65,8 @@ const StyledTileLabel = styled.div.attrs({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  touch-action: none;
+  user-select: none;
 
   @media (max-width: 415px) {
     font-size: ${props => `${Math.floor(props.fontSize * 0.75)}px`};
