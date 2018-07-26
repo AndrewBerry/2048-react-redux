@@ -8,7 +8,7 @@ import { reduceBoardToTiles } from "../utils/game";
 const mapStateToProps = state => ({
   score: state.score,
   tiles: reduceBoardToTiles(state.board),
-  gameSize: state.board.length,
+  gameSize: state.board.length
 });
 
 const mapDispatchToProps = dispatch => ({

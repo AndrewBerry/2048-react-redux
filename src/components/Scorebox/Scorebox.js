@@ -1,12 +1,12 @@
 import React from "react";
 import propTypes from "prop-types";
 
-import "./Scorebox.css"
+import "./Scorebox.css";
 
 export class Scorebox extends React.Component {
   state = {
-    lastChange: null,
-  }
+    lastChange: null
+  };
 
   render() {
     return (

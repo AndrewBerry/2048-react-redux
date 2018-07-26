@@ -16,8 +16,14 @@ export class Board extends React.Component {
     super(props);
     this.board = React.createRef();
 
-    this.handleKeyPress = throttle(this.handleKeyPress.bind(this), GAME_MOVE_COOLDOWN);
-    this.handleSwipeStart = throttle(this.handleSwipeStart.bind(this), GAME_MOVE_COOLDOWN);
+    this.handleKeyPress = throttle(
+      this.handleKeyPress.bind(this),
+      GAME_MOVE_COOLDOWN
+    );
+    this.handleSwipeStart = throttle(
+      this.handleSwipeStart.bind(this),
+      GAME_MOVE_COOLDOWN
+    );
     this.handleSwipeMove = this.handleSwipeMove.bind(this);
     this.handleSwipeEnd = this.handleSwipeEnd.bind(this);
 
@@ -48,8 +54,8 @@ export class Board extends React.Component {
       return;
     }
 
-    const {clientX, clientY} = e.touches[0];
-    this.swipeStart = {clientX, clientY};
+    const { clientX, clientY } = e.touches[0];
+    this.swipeStart = { clientX, clientY };
 
     e.preventDefault();
   }
@@ -63,7 +69,7 @@ export class Board extends React.Component {
       return;
     }
 
-    const {clientX, clientY} = e.changedTouches[0];
+    const { clientX, clientY } = e.changedTouches[0];
     const deltaX = clientX - this.swipeStart.clientX;
     const deltaY = clientY - this.swipeStart.clientY;
     const absDeltaX = Math.abs(deltaX);
@@ -74,7 +80,9 @@ export class Board extends React.Component {
     }
 
     const { shiftBoard } = this.props;
-    shiftBoard(absDeltaX > absDeltaY ? (deltaX > 0 ? 'r' : 'l') : (deltaY > 0 ? 'd' : 'u'));
+    shiftBoard(
+      absDeltaX > absDeltaY ? (deltaX > 0 ? "r" : "l") : deltaY > 0 ? "d" : "u"
+    );
   }
 
   componentDidMount() {
@@ -101,10 +109,10 @@ export class Board extends React.Component {
             key={`${x},${y}`}
             style={{
               top: `${cellWidth * y}%`,
-              left: `${cellWidth * x}%`,
+              left: `${cellWidth * x}%`
             }}
             className="Board__placeholder"
-          ></div>
+          />
         );
       }
     }
@@ -119,14 +127,14 @@ export class Board extends React.Component {
 
     return (
       <div className="Board" ref={this.board}>
-        <style>
-          {placeholderStyle}
-        </style>
+        <style>{placeholderStyle}</style>
         <TileStyle gameSize={this.props.gameSize} />
-        
+
         {tilePlaceholders}
 
-        {tiles.map(tile => <Tile key={tile.id} {...tile} gameSize={this.props.gameSize} />)}
+        {tiles.map(tile => (
+          <Tile key={tile.id} {...tile} gameSize={this.props.gameSize} />
+        ))}
       </div>
     );
   }
