@@ -3,12 +3,20 @@ import propTypes from "prop-types";
 
 import "./Scorebox.css"
 
-export const Scorebox = ({ label, score, className = ''}) => (
-  <div className={`Scorebox ${className}`}>
-    <div className="Scorebox__label">{label}</div>
-    <div className="Scorebox__score">{score}</div>
-  </div>
-);
+export class Scorebox extends React.Component {
+  state = {
+    lastChange: null,
+  }
+
+  render() {
+    return (
+      <div className={`Scorebox ${this.props.className}`}>
+        <div className="Scorebox__label">{this.props.label}</div>
+        <div className="Scorebox__score">{this.props.score}</div>
+      </div>
+    );
+  }
+}
 
 Scorebox.propTypes = {
   label: propTypes.string.isRequired,
