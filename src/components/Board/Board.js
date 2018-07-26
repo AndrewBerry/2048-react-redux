@@ -1,6 +1,5 @@
 import React from "react";
 import propTypes from "prop-types";
-import styled from "styled-components";
 import throttle from "lodash.throttle";
 
 import {
@@ -8,38 +7,10 @@ import {
   GAME_GRID_SIZE,
   GAME_MOVE_COOLDOWN,
   GAME_SWIPE_MIN_DISTANCE
-} from "../constants/game";
-import { Tile } from "./Tile";
+} from "../../constants/game";
 
-const StyledBoard = styled.div`
-  position: relative;
-  max-width: 500px;
-  max-height: 500px;
-  width: 100%;
-  height: 100vw;
-
-  background-color: #bbada0;
-  border: 5px solid #bbada0;
-  border-radius: 6px;
-
-  touch-action: none;
-  user-select: none;
-`;
-
-const tileWidth = Math.floor(100 / GAME_GRID_SIZE);
-const StyledTilePlaceholder = styled.div`
-  position: absolute;
-  width: ${tileWidth - GAME_TILE_SPACING * 2}%;
-  height: ${tileWidth - GAME_TILE_SPACING * 2}%;
-  margin: ${GAME_TILE_SPACING}%;
-  top: ${props => props.y * tileWidth}%;
-  left: ${props => props.x * tileWidth}%;
-
-  background-color: #cdc1b5;
-  border-radius: 3px;
-  touch-action: none;
-  user-select: none;
-`;
+import { Tile } from "../Tile";
+import "./Board.css";
 
 export class Board extends React.Component {
   constructor(props) {
@@ -47,9 +18,10 @@ export class Board extends React.Component {
     this.board = React.createRef();
 
     this.handleKeyPress = throttle(this.handleKeyPress.bind(this), GAME_MOVE_COOLDOWN);
-    this.handleSwipeStart = this.handleSwipeStart.bind(this);
+    this.handleSwipeStart = throttle(this.handleSwipeStart.bind(this), GAME_MOVE_COOLDOWN);
     this.handleSwipeMove = this.handleSwipeMove.bind(this);
-    this.handleSwipeEnd = throttle(this.handleSwipeEnd.bind(this), GAME_MOVE_COOLDOWN);
+    this.handleSwipeEnd = this.handleSwipeEnd.bind(this);
+
     this.swipeStart = null;
   }
 
@@ -119,20 +91,38 @@ export class Board extends React.Component {
   render() {
     const { tiles } = this.props;
 
+    const cellWidth = Math.floor(100 / GAME_GRID_SIZE);
     const tilePlaceholders = [];
     for (let x = 0; x < GAME_GRID_SIZE; x += 1) {
       for (let y = 0; y < GAME_GRID_SIZE; y += 1) {
         tilePlaceholders.push(
-          <StyledTilePlaceholder key={`${x},${y}`} x={x} y={y} />
+          <div
+            key={`${x},${y}`}
+            style={{
+              top: `${cellWidth * y}%`,
+              left: `${cellWidth * x}%`,
+            }}
+            className="Board__placeholder"
+          ></div>
         );
       }
     }
 
+    const placeholderStyle = `
+      .Board__placeholder {
+        width: ${cellWidth - GAME_TILE_SPACING * 2}%;
+        height: ${cellWidth - GAME_TILE_SPACING * 2}%;
+        margin: ${GAME_TILE_SPACING}%;
+      }
+    `;
+
     return (
-      <StyledBoard innerRef={this.board}>
+      <div className="Board" ref={this.board}>
+        <style>{placeholderStyle}</style>
         {tilePlaceholders}
+
         {tiles.map(tile => <Tile key={tile.id} {...tile} />)}
-      </StyledBoard>
+      </div>
     );
   }
 }
