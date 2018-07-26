@@ -18,7 +18,7 @@ export const staticTileStyles = `
     margin: ${GAME_TILE_SPACING}%;
 
     animation: Tile__pop ${GAME_MOVE_COOLDOWN * 2}ms ease-out;
-    transform:
+    transition:
       top ${GAME_MOVE_COOLDOWN}ms ease-out,
       left ${GAME_MOVE_COOLDOWN}ms ease-out,
       transform ${Math.floor(GAME_MOVE_COOLDOWN * 0.75)}ms ease-in;
