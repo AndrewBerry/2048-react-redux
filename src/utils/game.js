@@ -1,5 +1,3 @@
-import { GAME_GRID_SIZE } from "../constants/game";
-
 export const reduceBoardToTiles = board =>
   board
     .reduce(
@@ -26,11 +24,11 @@ export const reduceBoardToTiles = board =>
 export const removeDeadTiles = board =>
   board.map(row => row.map(cell => cell.slice(-1)));
 
-export const buildTraversals = direction => {
+export const buildTraversals = (direction, gameSize) => {
   const isLongRow = direction === "l" || direction === "r";
 
-  return Array.from({ length: GAME_GRID_SIZE }, (v, long) => {
-    const traversal = Array.from({ length: GAME_GRID_SIZE }, (vv, short) => ({
+  return Array.from({ length: gameSize }, (v, long) => {
+    const traversal = Array.from({ length: gameSize }, (vv, short) => ({
       [isLongRow ? "row" : "col"]: long,
       [isLongRow ? "col" : "row"]: short
     }));
@@ -43,14 +41,14 @@ export const buildTraversals = direction => {
 
 export const attemptToMoveBoard = (board, direction) => {
   const movedBoard = JSON.parse(JSON.stringify(board));
-  const traversals = buildTraversals(direction);
+  const traversals = buildTraversals(direction, board.length);
 
   let moveScore = 0;
   let didAnythingMove = false;
 
   traversals.forEach(traversal => {
     let lastMerge = 0;
-    for (let startIndex = 1; startIndex < GAME_GRID_SIZE; startIndex += 1) {
+    for (let startIndex = 1; startIndex < board.length; startIndex += 1) {
       for (
         let currentIndex = startIndex;
         currentIndex > lastMerge;
@@ -107,8 +105,8 @@ export const attemptToMoveBoard = (board, direction) => {
 export const getEmptyTiles = board => {
   const emptyCells = [];
 
-  for (let row = 0; row < GAME_GRID_SIZE; row += 1) {
-    for (let col = 0; col < GAME_GRID_SIZE; col += 1) {
+  for (let row = 0; row < board.length; row += 1) {
+    for (let col = 0; col < board.length; col += 1) {
       if (board[row][col].length === 0) {
         emptyCells.push({ col, row });
       }

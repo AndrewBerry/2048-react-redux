@@ -4,12 +4,11 @@ import throttle from "lodash.throttle";
 
 import {
   GAME_TILE_SPACING,
-  GAME_GRID_SIZE,
   GAME_MOVE_COOLDOWN,
   GAME_SWIPE_MIN_DISTANCE
 } from "../../constants/game";
 
-import { Tile, staticTileStyles } from "../Tile";
+import { Tile, TileStyle } from "../Tile";
 import "./Board.css";
 
 export class Board extends React.Component {
@@ -93,10 +92,10 @@ export class Board extends React.Component {
   render() {
     const { tiles } = this.props;
 
-    const cellWidth = Math.floor(100 / GAME_GRID_SIZE);
+    const cellWidth = Math.floor(100 / this.props.gameSize);
     const tilePlaceholders = [];
-    for (let x = 0; x < GAME_GRID_SIZE; x += 1) {
-      for (let y = 0; y < GAME_GRID_SIZE; y += 1) {
+    for (let x = 0; x < this.props.gameSize; x += 1) {
+      for (let y = 0; y < this.props.gameSize; y += 1) {
         tilePlaceholders.push(
           <div
             key={`${x},${y}`}
@@ -122,12 +121,12 @@ export class Board extends React.Component {
       <div className="Board" ref={this.board}>
         <style>
           {placeholderStyle}
-          {staticTileStyles}
         </style>
+        <TileStyle gameSize={this.props.gameSize} />
         
         {tilePlaceholders}
 
-        {tiles.map(tile => <Tile key={tile.id} {...tile} />)}
+        {tiles.map(tile => <Tile key={tile.id} {...tile} gameSize={this.props.gameSize} />)}
       </div>
     );
   }

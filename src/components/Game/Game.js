@@ -7,7 +7,7 @@ import { Button } from "../Button";
 
 import './Game.css';
 
-export const Game = ({ score, tiles, shiftBoard }) => (
+export const Game = ({ score, tiles, gameSize, shiftBoard }) => (
   <div className="Game">
     <div className="Game__header">
       <h1 className="Game__title">2048</h1>
@@ -18,7 +18,7 @@ export const Game = ({ score, tiles, shiftBoard }) => (
     </div>
 
     <div className="Game__board">
-      <Board tiles={tiles} shiftBoard={shiftBoard} />
+      <Board tiles={tiles} shiftBoard={shiftBoard} gameSize={gameSize} />
     </div>
 
     <div className="Game__footer">

@@ -1,1 +1,1 @@
-export { Tile, staticTileStyles } from "./Tile";
+export { Tile, TileStyle } from "./Tile";
