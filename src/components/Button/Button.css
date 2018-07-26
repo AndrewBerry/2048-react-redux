@@ -1,0 +1,11 @@
+.Button {
+  display: inline-block;
+  padding: 5px 20px;
+
+  border-radius: 3px;
+  background-color: #8f7a66;
+  color: #f9f6f2;
+  font-weight: bold;
+  font-size: 1em;
+  cursor: pointer;
+}

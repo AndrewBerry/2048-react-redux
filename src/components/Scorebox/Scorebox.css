@@ -1,0 +1,20 @@
+.Scorebox {
+  min-width: 100px;
+  margin-left: 10px;
+  padding: 5px 15px;
+
+  background-color: #bbada0;
+  border-radius: 3px;
+  text-align: center;
+  color: #fff;
+}
+
+.Scorebox__label {
+  color: #eee4da;
+  font-size: 0.5em;
+  text-transform: uppercase;
+}
+
+.Scorebox__score {
+  font-weight: bold;
+}

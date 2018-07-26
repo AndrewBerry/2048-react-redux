@@ -1,5 +1,66 @@
 .Game {
   max-width: 500px;
   margin: auto;
-  padding: 0 10px;
+}
+
+.Game__header {
+  display: block;
+  margin-bottom: 20px;
+
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.Game__title {
+  margin: 0 0 10px 0;
+
+  text-align: center;
+  font-size: 80px;
+  line-height: 0.8em;
+}
+
+.Game__scoreboxes {
+  display: flex;
+  font-size: 20px;
+}
+
+.Game__info {
+  display: flex;
+  margin-bottom: 30px;
+
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.Game__info p {
+  margin: 0;
+  line-height: 0.9em;
+}
+
+.Game__board {
+  margin-bottom: 30px;
+}
+
+@media (min-width: 400px) {
+  .Game__header {
+    display: flex;
+  }
+
+  .Game__title {
+    font-size: 60px;
+  }
+
+  .Game__scoreboxes {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 550px) {
+  .Game__title {
+    font-size: 95px;
+  }
+
+  .Game__scoreboxes {
+    font-size: 25px;
+  }
 }
