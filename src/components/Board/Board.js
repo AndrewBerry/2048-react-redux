@@ -38,6 +38,8 @@ export class Board extends React.Component {
     Object.entries(keyBinds).forEach(([direction, keys]) => {
       if (keys.indexOf(e.key) >= 0) {
         shiftBoard(direction);
+        e.preventDefault();
+        return;
       }
     });
   }
