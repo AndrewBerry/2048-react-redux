@@ -43,6 +43,6 @@ export const GAME_TILE_FONT_SIZES = {
   "2": 60,
   "3": 45,
   "4": 40,
-  "5": 30,
+  "5": 30
 };
 export const GAME_TILE_FONT_SIZE_DEFAULT = 24;

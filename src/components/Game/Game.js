@@ -1,20 +1,15 @@
 import React from "react";
-import styled from "styled-components";
 import propTypes from "prop-types";
-import { Board } from "./Board";
+import { Board } from "../Board";
 
-const StyledGame = styled.div`
-  max-width: 500px;
-  margin: auto;
-  padding: 0 10px;
-`;
+import './Game.css';
 
 export const Game = props => (
-  <StyledGame {...props}>
+  <div className="Game" {...props}>
     <h1>2048</h1>
     <p>Score: {props.score}</p>
     <Board {...props} />
-  </StyledGame>
+  </div>
 );
 
 Game.propTypes = {
