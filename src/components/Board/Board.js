@@ -9,7 +9,7 @@ import {
   GAME_SWIPE_MIN_DISTANCE
 } from "../../constants/game";
 
-import { Tile } from "../Tile";
+import { Tile, staticTileStyles } from "../Tile";
 import "./Board.css";
 
 export class Board extends React.Component {
@@ -118,7 +118,11 @@ export class Board extends React.Component {
 
     return (
       <div className="Board" ref={this.board}>
-        <style>{placeholderStyle}</style>
+        <style>
+          {placeholderStyle}
+          {staticTileStyles}
+        </style>
+        
         {tilePlaceholders}
 
         {tiles.map(tile => <Tile key={tile.id} {...tile} />)}

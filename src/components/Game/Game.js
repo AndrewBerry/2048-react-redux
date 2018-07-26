@@ -5,7 +5,7 @@ import { Board } from "../Board";
 import './Game.css';
 
 export const Game = props => (
-  <div className="Game" {...props}>
+  <div className="Game">
     <h1>2048</h1>
     <p>Score: {props.score}</p>
     <Board {...props} />
