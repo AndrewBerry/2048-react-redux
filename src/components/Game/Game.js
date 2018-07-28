@@ -9,7 +9,14 @@ import { GAME_TILE_SPACING } from "../../constants/game";
 
 import "./Game.css";
 
-export const Game = ({ score, tiles, gameSize, shiftBoard, hasLost }) => (
+export const Game = ({
+  score,
+  tiles,
+  gameSize,
+  hasLost,
+  shiftBoard,
+  newBoard
+}) => (
   <div className="Game">
     <style>
       .Game__board {"{"}
@@ -21,7 +28,9 @@ export const Game = ({ score, tiles, gameSize, shiftBoard, hasLost }) => (
       <h1 className="Game__title">2048</h1>
       <Scorebox className="Game__score" label="Score" score={score} />
       <Scorebox className="Game__best" label="Best" score={score} />
-      <Button className="Game__new">New Game</Button>
+      <Button className="Game__new" onClick={newBoard}>
+        New Game
+      </Button>
       <p className="Game__target">
         Join the numbers and get that <strong>2048</strong> tile!
       </p>
@@ -88,5 +97,6 @@ Game.propTypes = {
     })
   ).isRequired,
 
-  shiftBoard: propTypes.func.isRequired
+  shiftBoard: propTypes.func.isRequired,
+  newBoard: propTypes.func.isRequired
 };

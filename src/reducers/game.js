@@ -5,7 +5,7 @@ import {
   attemptToMoveBoard
 } from "../utils/game";
 
-import { SHIFT_BOARD } from "../constants/actionTypes";
+import { SHIFT_BOARD, NEW_GAME } from "../constants/actionTypes";
 
 const initialState = {
   board: [
@@ -36,7 +36,7 @@ export const game = (state = initialState, action) => {
       }
 
       const newTilePosition =
-        emptyTiles[action.nextTileIndex % emptyTiles.length];
+        emptyTiles[Math.floor(action.nextTilePosition * emptyTiles.length)];
       const boardWithNewTile = addTileToBoard(
         movedBoard,
         newTilePosition,
@@ -49,6 +49,29 @@ export const game = (state = initialState, action) => {
         score: state.score + moveScore,
         board: boardWithNewTile,
         nextTileId: state.nextTileId + 1
+      };
+
+    case NEW_GAME:
+      const length = action.size;
+      const newBoard = Array.from({length}, () => (Array.from({length}, () => [])));
+
+      const newBoardWithTiles = action.tilePositions.reduce((board, position, tileIndex) => {
+        const emptyTilePositions = getEmptyTiles(board);
+        const newTilePosition = emptyTilePositions[Math.floor(position * emptyTilePositions.length)];
+        
+        return addTileToBoard(
+          board,
+          newTilePosition,
+          action.tileScores[tileIndex] < 0.9 ? 1 : 2,
+          tileIndex
+        );
+      }, newBoard);
+
+      return {
+        ...state,
+        score: 0,
+        board: newBoardWithTiles,
+        nextTileId: action.tilePositions.length,
       };
 
     default:

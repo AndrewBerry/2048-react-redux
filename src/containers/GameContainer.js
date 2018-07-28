@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 
 import { Game } from "../components/Game";
 
-import { shiftBoard } from "../actionCreators";
+import { shiftBoard, newBoard } from "../actionCreators";
 import { reduceBoardToTiles, hasLost } from "../utils/game";
 
 const mapStateToProps = state => ({
@@ -13,7 +13,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  shiftBoard: direction => dispatch(shiftBoard(direction))
+  shiftBoard: direction => dispatch(shiftBoard(direction)),
+  newBoard: () => dispatch(newBoard(4, Date.now().toString(), 2))
 });
 
 export const GameContainer = connect(
