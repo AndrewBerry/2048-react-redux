@@ -39,6 +39,8 @@
 
 .Game__board {
   margin-bottom: 30px;
+  background-color: #bbada0;
+  border-radius: 6px;
 }
 
 @media (min-width: 400px) {

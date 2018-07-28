@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import { Game } from "../components/Game";
 
 import { shiftBoard } from "../actionCreators";
-import { reduceBoardToTiles } from "../utils/game";
+import { reduceBoardToTiles, hasLost } from "../utils/game";
 
 const mapStateToProps = state => ({
   score: state.score,
   tiles: reduceBoardToTiles(state.board),
-  gameSize: state.board.length
+  gameSize: state.board.length,
+  hasLost: hasLost(state.board)
 });
 
 const mapDispatchToProps = dispatch => ({

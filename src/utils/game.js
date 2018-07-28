@@ -126,3 +126,29 @@ export const addTileToBoard = (board, position, score, id) => {
 
   return boardWithTile;
 };
+
+export const hasLost = board => {
+  for (let y = 0; y < board.length; y += 1) {
+    for (let x = 0; x < board.length; x += 1) {
+      const currentEmpty = board[y][x].length === 0;
+      const bottomEmpty = y + 1 < board.length && board[y + 1][x].length === 0;
+      const rightEmpty = x + 1 < board.length && board[y][x + 1].length === 0;
+
+      if (currentEmpty || rightEmpty || bottomEmpty) {
+        return false;
+      }
+
+      const currentValue = board[y][x].slice(-1)[0].score;
+      const bottomValue =
+        (y + 1 < board.length && board[y + 1][x].slice(-1)[0].score) || 0;
+      const rightValue =
+        (x + 1 < board.length && board[y][x + 1].slice(-1)[0].score) || 0;
+
+      if (currentValue === bottomValue || currentValue === rightValue) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+};

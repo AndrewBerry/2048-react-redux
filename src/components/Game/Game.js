@@ -5,10 +5,18 @@ import { Scorebox } from "../Scorebox";
 import { Board } from "../Board";
 import { Button } from "../Button";
 
+import { GAME_TILE_SPACING } from "../../constants/game";
+
 import "./Game.css";
 
-export const Game = ({ score, tiles, gameSize, shiftBoard }) => (
+export const Game = ({ score, tiles, gameSize, shiftBoard, hasLost }) => (
   <div className="Game">
+    <style>
+      .Game__board {"{"}
+      padding: {GAME_TILE_SPACING}%;
+      {"}"}
+    </style>
+
     <div className="Game__header">
       <h1 className="Game__title">2048</h1>
       <Scorebox className="Game__score" label="Score" score={score} />
@@ -20,7 +28,12 @@ export const Game = ({ score, tiles, gameSize, shiftBoard }) => (
     </div>
 
     <div className="Game__board">
-      <Board tiles={tiles} shiftBoard={shiftBoard} gameSize={gameSize} />
+      <Board
+        tiles={tiles}
+        shiftBoard={shiftBoard}
+        gameSize={gameSize}
+        hasLost={hasLost}
+      />
     </div>
 
     <div className="Game__footer">

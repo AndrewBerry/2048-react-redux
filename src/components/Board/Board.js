@@ -31,6 +31,10 @@ export class Board extends React.Component {
   }
 
   handleKeyPress(e) {
+    if (this.props.hasLost) {
+      return;
+    }
+
     const { shiftBoard } = this.props;
 
     const keyBinds = {
@@ -50,7 +54,7 @@ export class Board extends React.Component {
   }
 
   handleSwipeStart(e) {
-    if (!e.touches || e.touches.length > 1) {
+    if (this.props.hasLost || !e.touches || e.touches.length > 1) {
       return;
     }
 
@@ -61,11 +65,15 @@ export class Board extends React.Component {
   }
 
   handleSwipeMove(e) {
+    if (this.props.hasLost) {
+      return;
+    }
+
     e.preventDefault();
   }
 
   handleSwipeEnd(e) {
-    if (!this.swipeStart) {
+    if (!this.swipeStart || this.props.hasLost) {
       return;
     }
 
@@ -126,7 +134,10 @@ export class Board extends React.Component {
     `;
 
     return (
-      <div className="Board" ref={this.board}>
+      <div
+        className={`Board ${this.props.hasLost ? "Board--hasLost" : ""}`}
+        ref={this.board}
+      >
         <style>{placeholderStyle}</style>
         <TileStyle gameSize={this.props.gameSize} />
 
@@ -135,6 +146,10 @@ export class Board extends React.Component {
         {tiles.map(tile => (
           <Tile key={tile.id} {...tile} gameSize={this.props.gameSize} />
         ))}
+
+        <div className="Board__lostScreen">
+          <h2>Game over!</h2>
+        </div>
       </div>
     );
   }
