@@ -152,3 +152,19 @@ export const hasLost = board => {
 
   return true;
 };
+
+export const getHighestScoreTile = board => {
+  return board.reduce((highest, row) => {
+    return Math.max(
+      highest,
+      row.reduce((rowHighest, cell) => {
+        return Math.max(
+          rowHighest,
+          cell.reduce((cellHighest, cellValue) => {
+            return Math.max(cellHighest, cellValue.score);
+          }, 0)
+        );
+      }, 0)
+    );
+  }, 0);
+};

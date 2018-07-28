@@ -17,7 +17,7 @@ export const newBoard = (size, seed, tiles = 2) => {
     type: NEW_GAME,
     seed,
     size,
-    tileScores: Array.from({length: tiles}, () => rng()),
-    tilePositions: Array.from({length: tiles}, () => rng())
+    tileScores: Array.from({ length: tiles }, () => rng()),
+    tilePositions: Array.from({ length: tiles }, () => rng())
   };
 };

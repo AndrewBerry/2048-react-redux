@@ -14,6 +14,7 @@ export const Game = ({
   tiles,
   gameSize,
   hasLost,
+  highestTile,
   shiftBoard,
   newBoard
 }) => (
@@ -32,7 +33,8 @@ export const Game = ({
         New Game
       </Button>
       <p className="Game__target">
-        Join the numbers and get that <strong>2048</strong> tile!
+        Join the numbers and get that{" "}
+        <strong>{Math.pow(2, Math.max(11, highestTile + 1))}</strong> tile!
       </p>
     </div>
 
@@ -86,6 +88,7 @@ export const Game = ({
 
 Game.propTypes = {
   score: propTypes.number.isRequired,
+  highestTile: propTypes.number.isRequired,
 
   tiles: propTypes.arrayOf(
     propTypes.shape({

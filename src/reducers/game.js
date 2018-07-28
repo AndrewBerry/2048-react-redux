@@ -4,21 +4,47 @@ import {
   removeDeadTiles,
   attemptToMoveBoard
 } from "../utils/game";
+import { newBoard } from "../actionCreators";
 
 import { SHIFT_BOARD, NEW_GAME } from "../constants/actionTypes";
 
-const initialState = {
-  board: [
-    [[], [], [], []],
-    [[], [], [{ id: 1, score: 1 }], []],
-    [[], [{ id: 2, score: 1 }], [], []],
-    [[], [], [], []]
-  ],
-  nextTileId: 3,
-  score: 0
-};
+const newGame = (state, action) => {
+  const length = action.size;
+  const newBoard = Array.from({ length }, () =>
+    Array.from({ length }, () => [])
+  );
 
-export const game = (state = initialState, action) => {
+  const newBoardWithTiles = action.tilePositions.reduce(
+    (board, position, tileIndex) => {
+      const emptyTilePositions = getEmptyTiles(board);
+      const newTilePosition =
+        emptyTilePositions[
+          Math.floor(position * emptyTilePositions.length)
+        ];
+
+      return addTileToBoard(
+        board,
+        newTilePosition,
+        action.tileScores[tileIndex] < 0.9 ? 1 : 2,
+        tileIndex
+      );
+    },
+    newBoard
+  );
+
+  return {
+    ...state,
+    score: 0,
+    board: newBoardWithTiles,
+    nextTileId: action.tilePositions.length
+  };
+}
+
+export const game = (state, action) => {
+  if (!state) {
+    return newGame({}, newBoard(4, Date.now().toString(), 2));
+  }
+
   switch (action.type) {
     case SHIFT_BOARD:
       const activeBoard = removeDeadTiles(state.board);
@@ -52,27 +78,7 @@ export const game = (state = initialState, action) => {
       };
 
     case NEW_GAME:
-      const length = action.size;
-      const newBoard = Array.from({length}, () => (Array.from({length}, () => [])));
-
-      const newBoardWithTiles = action.tilePositions.reduce((board, position, tileIndex) => {
-        const emptyTilePositions = getEmptyTiles(board);
-        const newTilePosition = emptyTilePositions[Math.floor(position * emptyTilePositions.length)];
-        
-        return addTileToBoard(
-          board,
-          newTilePosition,
-          action.tileScores[tileIndex] < 0.9 ? 1 : 2,
-          tileIndex
-        );
-      }, newBoard);
-
-      return {
-        ...state,
-        score: 0,
-        board: newBoardWithTiles,
-        nextTileId: action.tilePositions.length,
-      };
+      return newGame(state, action);
 
     default:
       return state;
