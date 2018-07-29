@@ -18,9 +18,7 @@ const newGame = (state, action) => {
     (board, position, tileIndex) => {
       const emptyTilePositions = getEmptyTiles(board);
       const newTilePosition =
-        emptyTilePositions[
-          Math.floor(position * emptyTilePositions.length)
-        ];
+        emptyTilePositions[Math.floor(position * emptyTilePositions.length)];
 
       return addTileToBoard(
         board,
@@ -38,7 +36,7 @@ const newGame = (state, action) => {
     board: newBoardWithTiles,
     nextTileId: action.tilePositions.length
   };
-}
+};
 
 export const game = (state, action) => {
   if (!state) {

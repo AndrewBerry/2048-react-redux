@@ -10,7 +10,6 @@ export class Scorebox extends React.Component {
   };
 
   componentDidUpdate(previousProps) {
-    console.log("delta update", previousProps.score, this.props.score);
     if (this.props.score === previousProps.score) {
       return;
     }
@@ -28,7 +27,9 @@ export class Scorebox extends React.Component {
     return (
       <div className={`Scorebox ${this.props.className}`}>
         {this.state.delta > 0 && (
-          <div className="Scorebox__delta" key={this.state.lastDeltaChange}>+{this.state.delta}</div>
+          <div className="Scorebox__delta" key={this.state.lastDeltaChange}>
+            +{this.state.delta}
+          </div>
         )}
 
         <div className="Scorebox__label">{this.props.label}</div>
