@@ -5,12 +5,32 @@ import "./Scorebox.css";
 
 export class Scorebox extends React.Component {
   state = {
-    lastChange: null
+    delta: 0,
+    lastDeltaChange: 0
   };
+
+  componentDidUpdate(previousProps) {
+    console.log("delta update", previousProps.score, this.props.score);
+    if (this.props.score === previousProps.score) {
+      return;
+    }
+
+    const delta = this.props.score - previousProps.score;
+    if (delta > 0) {
+      this.setState({
+        delta,
+        lastDeltaChange: Date.now()
+      });
+    }
+  }
 
   render() {
     return (
       <div className={`Scorebox ${this.props.className}`}>
+        {this.state.delta > 0 && (
+          <div className="Scorebox__delta" key={this.state.lastDeltaChange}>+{this.state.delta}</div>
+        )}
+
         <div className="Scorebox__label">{this.props.label}</div>
         <div className="Scorebox__score">{this.props.score}</div>
       </div>
