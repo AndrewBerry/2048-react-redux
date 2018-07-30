@@ -1,14 +1,10 @@
 import React, { Component } from "react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
 
-import { game } from "./reducers/game";
+import { configureStore } from "./configureStore";
 import { GameContainer } from "./containers/GameContainer";
 
-const store = createStore(
-  game,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+const store = configureStore();
 
 class App extends Component {
   render() {
