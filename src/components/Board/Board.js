@@ -11,19 +11,22 @@ import {
 import { Tile, TileStyle } from "../Tile";
 import "./Board.css";
 
+const throttledPreventDefaultHandler = (handler, wait) => {
+  const throttledHandler = throttle(handler, wait);
+
+  return (event) => {
+    event.preventDefault();
+    throttledHandler(event);
+  }
+}
+
 export class Board extends React.Component {
   constructor(props) {
     super(props);
     this.board = React.createRef();
 
-    this.handleKeyPress = throttle(
-      this.handleKeyPress.bind(this),
-      GAME_MOVE_COOLDOWN
-    );
-    this.handleSwipeStart = throttle(
-      this.handleSwipeStart.bind(this),
-      GAME_MOVE_COOLDOWN
-    );
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleSwipeStart = this.handleSwipeStart.bind(this);
     this.handleSwipeMove = this.handleSwipeMove.bind(this);
     this.handleSwipeEnd = this.handleSwipeEnd.bind(this);
 
@@ -94,9 +97,9 @@ export class Board extends React.Component {
   }
 
   componentDidMount() {
-    document.body.addEventListener("keydown", this.handleKeyPress);
+    document.body.addEventListener("keydown", throttledPreventDefaultHandler(this.handleKeyPress, GAME_MOVE_COOLDOWN));
 
-    this.board.current.addEventListener("touchstart", this.handleSwipeStart);
+    this.board.current.addEventListener("touchstart", throttledPreventDefaultHandler(this.handleSwipeStart, GAME_MOVE_COOLDOWN));
     this.board.current.addEventListener("touchmove", this.handleSwipeMove);
     this.board.current.addEventListener("touchend", this.handleSwipeEnd);
   }
