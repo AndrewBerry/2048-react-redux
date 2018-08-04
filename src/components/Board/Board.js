@@ -14,11 +14,11 @@ import "./Board.css";
 const throttledPreventDefaultHandler = (handler, wait) => {
   const throttledHandler = throttle(handler, wait);
 
-  return (event) => {
+  return event => {
     event.preventDefault();
     throttledHandler(event);
-  }
-}
+  };
+};
 
 export class Board extends React.Component {
   constructor(props) {
@@ -97,9 +97,15 @@ export class Board extends React.Component {
   }
 
   componentDidMount() {
-    document.body.addEventListener("keydown", throttledPreventDefaultHandler(this.handleKeyPress, GAME_MOVE_COOLDOWN));
+    document.body.addEventListener(
+      "keydown",
+      throttledPreventDefaultHandler(this.handleKeyPress, GAME_MOVE_COOLDOWN)
+    );
 
-    this.board.current.addEventListener("touchstart", throttledPreventDefaultHandler(this.handleSwipeStart, GAME_MOVE_COOLDOWN));
+    this.board.current.addEventListener(
+      "touchstart",
+      throttledPreventDefaultHandler(this.handleSwipeStart, GAME_MOVE_COOLDOWN)
+    );
     this.board.current.addEventListener("touchmove", this.handleSwipeMove);
     this.board.current.addEventListener("touchend", this.handleSwipeEnd);
   }
