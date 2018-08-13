@@ -153,7 +153,12 @@ export class Board extends React.Component {
         {tilePlaceholders}
 
         {tiles.map(tile => (
-          <Tile key={tile.id} {...tile} gameSize={this.props.gameSize} />
+          <Tile
+            key={`${this.props.seed}-${tile.id}`}
+            {...tile}
+            gameSize={this.props.gameSize}
+            active={true}
+          />
         ))}
 
         <div className="Board__lostScreen">
