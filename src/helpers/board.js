@@ -107,7 +107,7 @@ export const buildTraversals = (direction, boardSize) => {
       ? traversal.reverse()
       : traversal;
   });
-}
+};
 
 export const attemptToMoveBoard = (board, direction) => {
   const movedBoard = JSON.parse(JSON.stringify(board));
