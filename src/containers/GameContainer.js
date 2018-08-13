@@ -1,25 +1,29 @@
 import { connect } from "react-redux";
 
-import { Game } from "../components/Game";
-
-import { shiftBoard, newBoard } from "../actionCreators";
+import { createNewGameAction, createShiftBoardAction } from "../actions";
 import {
   reduceBoardToTiles,
-  hasLost,
-  getHighestScoreTile
-} from "../utils/game";
+  getHighestScoreTile,
+  hasLost
+} from "../helpers/board";
+import { Game } from "../components/Game";
 
 const mapStateToProps = state => ({
   score: state.score,
   tiles: reduceBoardToTiles(state.board),
   gameSize: state.board.length,
+  seed: state.seed,
   hasLost: hasLost(state.board),
   highestTile: getHighestScoreTile(state.board)
 });
 
 const mapDispatchToProps = dispatch => ({
-  shiftBoard: direction => dispatch(shiftBoard(direction)),
-  newBoard: () => dispatch(newBoard(4, Date.now().toString(), 2))
+  newGame: () => {
+    dispatch(createNewGameAction(Date.now(), 4, 4, 2));
+  },
+  shiftBoard: direction => {
+    dispatch(createShiftBoardAction(direction));
+  }
 });
 
 export const GameContainer = connect(
