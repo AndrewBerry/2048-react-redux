@@ -11,20 +11,15 @@ import {
 import { Tile, TileStyle } from "../Tile";
 import "./Board.css";
 
-const throttledPreventDefaultHandler = (handler, wait) => {
-  const throttledHandler = throttle(handler, wait);
-
-  return event => {
-    event.preventDefault();
-    throttledHandler(event);
-  };
-};
-
 export class Board extends React.Component {
   constructor(props) {
     super(props);
     this.board = React.createRef();
 
+    this.throttledShiftBoard = throttle(
+      this.throttledShiftBoard.bind(this),
+      GAME_MOVE_COOLDOWN
+    );
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleSwipeStart = this.handleSwipeStart.bind(this);
     this.handleSwipeMove = this.handleSwipeMove.bind(this);
@@ -33,12 +28,15 @@ export class Board extends React.Component {
     this.swipeStart = null;
   }
 
+  throttledShiftBoard(direction) {
+    console.log(direction);
+    this.props.shiftBoard(direction);
+  }
+
   handleKeyPress(e) {
     if (this.props.hasLost) {
       return;
     }
-
-    const { shiftBoard } = this.props;
 
     const keyBinds = {
       u: ["w", "ArrowUp"],
@@ -49,7 +47,7 @@ export class Board extends React.Component {
 
     Object.entries(keyBinds).forEach(([direction, keys]) => {
       if (keys.indexOf(e.key) >= 0) {
-        shiftBoard(direction);
+        this.throttledShiftBoard(direction);
         e.preventDefault();
         return;
       }
@@ -90,22 +88,15 @@ export class Board extends React.Component {
       return;
     }
 
-    const { shiftBoard } = this.props;
-    shiftBoard(
+    this.throttledShiftBoard(
       absDeltaX > absDeltaY ? (deltaX > 0 ? "r" : "l") : deltaY > 0 ? "d" : "u"
     );
   }
 
   componentDidMount() {
-    document.body.addEventListener(
-      "keydown",
-      throttledPreventDefaultHandler(this.handleKeyPress, GAME_MOVE_COOLDOWN)
-    );
+    document.body.addEventListener("keydown", this.handleKeyPress);
 
-    this.board.current.addEventListener(
-      "touchstart",
-      throttledPreventDefaultHandler(this.handleSwipeStart, GAME_MOVE_COOLDOWN)
-    );
+    this.board.current.addEventListener("touchstart", this.handleSwipeStart);
     this.board.current.addEventListener("touchmove", this.handleSwipeMove);
     this.board.current.addEventListener("touchend", this.handleSwipeEnd);
   }
