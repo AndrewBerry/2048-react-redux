@@ -42,7 +42,8 @@ export const reduceBoardToTiles = board => {
       tiles.push({
         ...board[y][x],
         y,
-        x
+        x,
+        active: true,
       });
     }
   }

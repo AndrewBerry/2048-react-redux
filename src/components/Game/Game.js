@@ -16,6 +16,7 @@ export const Game = ({
   gameSize,
   hasLost,
   highestTile,
+  gameState,
   shiftBoard,
   newGame
 }) => (
@@ -46,6 +47,7 @@ export const Game = ({
         shiftBoard={shiftBoard}
         gameSize={gameSize}
         hasLost={hasLost}
+        gameState={gameState}
       />
     </div>
 

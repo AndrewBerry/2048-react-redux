@@ -29,7 +29,6 @@ export class Board extends React.Component {
   }
 
   throttledShiftBoard(direction) {
-    console.log(direction);
     this.props.shiftBoard(direction);
   }
 
@@ -106,7 +105,7 @@ export class Board extends React.Component {
   }
 
   render() {
-    const { tiles } = this.props;
+    const tiles = this.props.tiles.sort((a, b) => (a.id - b.id));
 
     const cellWidth = Math.floor(100 / this.props.gameSize);
     const tilePlaceholders = [];
@@ -141,14 +140,15 @@ export class Board extends React.Component {
         <style>{placeholderStyle}</style>
         <TileStyle gameSize={this.props.gameSize} />
 
-        {tilePlaceholders}
+        <div>
+          {tilePlaceholders}
+        </div>
 
         {tiles.map(tile => (
           <Tile
             key={`${this.props.seed}-${tile.id}`}
             {...tile}
             gameSize={this.props.gameSize}
-            active={true}
           />
         ))}
 
