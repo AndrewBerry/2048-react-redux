@@ -11,6 +11,10 @@
   user-select: none;
 }
 
+.Tile--dead {
+  transform: scale(0);
+}
+
 .Tile--t1 { background-color: rgb(234, 222, 210); color: rgb(99, 91, 82); font-size: 70px; }
 .Tile--t2 { background-color: rgb(231, 217, 189); color: rgb(99, 91, 82); font-size: 70px; }
 .Tile--t3 { background-color: rgb(216, 136, 80); color: rgb(247, 253, 247); font-size: 70px; }

@@ -27,11 +27,10 @@ export const Tile = ({ active, score, x, y, gameSize }) => {
   const tileStyle = {
     top: `${y * tileWidth}%`,
     left: `${x * tileWidth}%`,
-    transform: active ? null : "scale(0)"
   };
 
   return (
-    <div className={`Tile Tile--t${score}`} style={tileStyle}>
+    <div className={`Tile Tile--t${score} ${active ? '' : 'Tile--dead'}`} style={tileStyle}>
       <span className="Tile__label">{Math.pow(2, score)}</span>
     </div>
   );
