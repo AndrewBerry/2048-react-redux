@@ -67,8 +67,8 @@ export const getHighestScoreTile = board => {
 };
 
 export const hasLost = board => {
-  for (let y = 0; y <= board.length; y += 1) {
-    for (let x = 0; x <= board[y].length; x += 1) {
+  for (let y = 0; y < board.length; y += 1) {
+    for (let x = 0; x < board[y].length; x += 1) {
       if (!board[y][x]) {
         return false;
       }
