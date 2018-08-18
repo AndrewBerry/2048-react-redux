@@ -1,7 +1,10 @@
 import { createStore, applyMiddleware } from "redux";
 import { rootReducer } from "./reducers";
 import { createNewGameAction } from "./actions";
-import { persistToStorage, getInitialState } from "./middleware/persistToStorage";
+import {
+  persistToStorage,
+  getInitialState
+} from "./middleware/persistToStorage";
 
 export const configureStore = () => {
   const initialState = getInitialState(window.localStorage);
@@ -9,9 +12,7 @@ export const configureStore = () => {
   const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(
-      persistToStorage(window.localStorage)
-    )
+    applyMiddleware(persistToStorage(window.localStorage))
   );
 
   if (!initialState.board) {

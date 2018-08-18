@@ -14,8 +14,8 @@ export const TileStyle = ({ gameSize }) => {
       width: {tileWidth - GAME_TILE_SPACING * 2}%; height:{" "}
       {tileWidth - GAME_TILE_SPACING * 2}%; margin: {GAME_TILE_SPACING}%;
       animation: Tile__pop {GAME_MOVE_COOLDOWN * 2}ms ease-out; transition: top{" "}
-      {GAME_MOVE_COOLDOWN}ms ease-out, left {GAME_MOVE_COOLDOWN}ms ease-out,
-      transform {Math.floor(GAME_MOVE_COOLDOWN * 0.75)}ms ease-in;
+      {GAME_MOVE_COOLDOWN * 0.75}ms ease-out, left {GAME_MOVE_COOLDOWN * 0.75}ms
+      ease-out, transform {GAME_MOVE_COOLDOWN * 0.75}ms ease-in;
       {"}"}
     </style>
   );
@@ -26,11 +26,14 @@ export const Tile = ({ active, score, x, y, gameSize }) => {
 
   const tileStyle = {
     top: `${y * tileWidth}%`,
-    left: `${x * tileWidth}%`,
+    left: `${x * tileWidth}%`
   };
 
   return (
-    <div className={`Tile Tile--t${score} ${active ? '' : 'Tile--dead'}`} style={tileStyle}>
+    <div
+      className={`Tile Tile--t${score} ${active ? "" : "Tile--dead"}`}
+      style={tileStyle}
+    >
       <span className="Tile__label">{Math.pow(2, score)}</span>
     </div>
   );

@@ -10,21 +10,6 @@
   user-select: none;
 }
 
-.Board__lostScreen {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  max-width: 300px;
-  transform: translate(-50%, -50%);
-
-  background-color: #fff;
-}
-
-.Board--hasLost .Board__lostScreen {
-  display: block;
-}
-
 .Board__placeholder {
   position: absolute;
 

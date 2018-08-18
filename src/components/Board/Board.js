@@ -9,7 +9,6 @@ import {
 } from "../../constants/game";
 
 import { Tile, TileStyle } from "../Tile";
-import { GameOver } from "../GameOver";
 import "./Board.css";
 
 export class Board extends React.Component {
@@ -107,7 +106,7 @@ export class Board extends React.Component {
   }
 
   render() {
-    const tiles = this.props.tiles.sort((a, b) => (a.id - b.id));
+    const tiles = this.props.tiles.sort((a, b) => a.id - b.id);
 
     const cellWidth = Math.floor(100 / this.props.gameSize);
     const tilePlaceholders = [];
@@ -139,9 +138,7 @@ export class Board extends React.Component {
         <style>{placeholderStyle}</style>
         <TileStyle gameSize={this.props.gameSize} />
 
-        <div>
-          {tilePlaceholders}
-        </div>
+        <div>{tilePlaceholders}</div>
 
         {tiles.map(tile => (
           <Tile
@@ -150,10 +147,6 @@ export class Board extends React.Component {
             gameSize={this.props.gameSize}
           />
         ))}
-
-        {this.props.hasLost && <div className="Board__lostScreen">
-          <GameOver score={this.props.score} newGame={this.props.newGame} />
-        </div>}
       </div>
     );
   }
@@ -169,6 +162,5 @@ Board.propTypes = {
       y: propTypes.number.isRequired
     })
   ).isRequired,
-  shiftBoard: propTypes.func.isRequired,
-  newGame: propTypes.func.isRequired
+  shiftBoard: propTypes.func.isRequired
 };

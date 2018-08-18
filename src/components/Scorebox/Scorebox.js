@@ -25,7 +25,11 @@ export class Scorebox extends React.Component {
 
   render() {
     return (
-      <div className={`Scorebox ${this.props.className || ''} ${this.props.isLarge ? 'Scorebox--large' : null}`}>
+      <div
+        className={`Scorebox ${this.props.className || ""} ${
+          this.props.isLarge ? "Scorebox--large" : null
+        }`}
+      >
         {this.state.delta > 0 && (
           <div className="Scorebox__delta" key={this.state.lastDeltaChange}>
             +{this.state.delta}

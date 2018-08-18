@@ -38,9 +38,23 @@
 }
 
 .Game__board {
+  position: relative;
+
   margin-bottom: 30px;
   background-color: #bbada0;
   border-radius: 6px;
+}
+
+.Game__overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  max-width: 300px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  box-shadow: 0 0 80px 20px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
 }
 
 @media (min-width: 400px) {

@@ -43,7 +43,7 @@ export const reduceBoardToTiles = board => {
         ...board[y][x],
         y,
         x,
-        active: true,
+        active: true
       });
     }
   }

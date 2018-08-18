@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
   seed: state.seed,
   hasLost: hasLost(state.board),
   highestTile: getHighestScoreTile(state.board),
-  gameState: state.nextTileId,
+  gameState: state.nextTileId
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,0 +1,13 @@
+.NewGame {
+  padding: 2em;
+}
+
+.NewGame__title {
+  margin: 0 0 1em 0;
+  text-align: center;
+}
+
+.NewGame__controls {
+  display: flex;
+  justify-content: space-between;
+}

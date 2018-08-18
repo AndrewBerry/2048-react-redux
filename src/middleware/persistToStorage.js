@@ -1,30 +1,28 @@
-import {
-  NEW_GAME, SHIFT_BOARD
-} from "../actions";
+import { NEW_GAME, SHIFT_BOARD } from "../actions";
 import { hasLost } from "../helpers/board";
 
 export const GAME_STATE = "GAME_STATE";
 export const BEST_SCORE = "BEST_SCORE";
 
-export const persistToStorage = storage => store => next => action => {  
+export const persistToStorage = storage => store => next => action => {
   next(action);
 
   // eslint-disable-next-line
   switch (action.type) {
     case NEW_GAME:
-        storage.removeItem(GAME_STATE);
+      storage.removeItem(GAME_STATE);
       break;
 
     case SHIFT_BOARD:
-        const state = store.getState();
-        storage.setItem(BEST_SCORE, JSON.stringify(state.bestScore));
+      const state = store.getState();
+      storage.setItem(BEST_SCORE, JSON.stringify(state.bestScore));
 
-        if (hasLost(state.board)) {
-          storage.removeItem(GAME_STATE);
-          break;
-        }
+      if (hasLost(state.board)) {
+        storage.removeItem(GAME_STATE);
+        break;
+      }
 
-        storage.setItem(GAME_STATE, JSON.stringify(state));
+      storage.setItem(GAME_STATE, JSON.stringify(state));
       break;
   }
 };
