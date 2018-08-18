@@ -16,11 +16,9 @@ export const persistToStorage = storage => store => next => action => {
 
     case SHIFT_BOARD:
         const state = store.getState();
-
-        if (state.score > 0) {
-          storage.setItem(GAME_STATE, JSON.stringify(state));
-          storage.setItem(BEST_SCORE, JSON.stringify(state.bestScore));
-        }
+        
+        storage.setItem(GAME_STATE, JSON.stringify(state));
+        storage.setItem(BEST_SCORE, JSON.stringify(state.bestScore));
       break;
   }
 };

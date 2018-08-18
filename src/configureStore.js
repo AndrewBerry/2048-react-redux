@@ -14,7 +14,7 @@ export const configureStore = () => {
     )
   );
 
-  if (!initialState.board || !initialState.score) {
+  if (!initialState.board) {
     store.dispatch(createNewGameAction(Date.now(), 4, 4, 2));
   }
 
