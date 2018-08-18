@@ -8,6 +8,15 @@
   color: #fff;
 }
 
+.Scorebox--large {
+  font-size: 2.5rem;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+
+  color: #fff;
+  background-color: rgb(216, 136, 80);
+}
+
 .Scorebox__delta {
   position: absolute;
   top: 50%;
@@ -24,6 +33,7 @@
   color: #eee4da;
   font-size: 0.5em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .Scorebox__score {

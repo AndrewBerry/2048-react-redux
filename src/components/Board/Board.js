@@ -9,6 +9,7 @@ import {
 } from "../../constants/game";
 
 import { Tile, TileStyle } from "../Tile";
+import { GameOver } from "../GameOver";
 import "./Board.css";
 
 export class Board extends React.Component {
@@ -133,10 +134,7 @@ export class Board extends React.Component {
     `;
 
     return (
-      <div
-        className={`Board ${this.props.hasLost ? "Board--hasLost" : ""}`}
-        ref={this.board}
-      >
+      <div className="Board" ref={this.board}>
         <style>{placeholderStyle}</style>
         <TileStyle gameSize={this.props.gameSize} />
 
@@ -152,9 +150,9 @@ export class Board extends React.Component {
           />
         ))}
 
-        <div className="Board__lostScreen">
-          <h2>Game over!</h2>
-        </div>
+        {this.props.hasLost && <div className="Board__lostScreen">
+          <GameOver score={this.props.score} newGame={this.props.newGame} />
+        </div>}
       </div>
     );
   }
@@ -170,5 +168,6 @@ Board.propTypes = {
       y: propTypes.number.isRequired
     })
   ).isRequired,
-  shiftBoard: propTypes.func.isRequired
+  shiftBoard: propTypes.func.isRequired,
+  newGame: propTypes.func.isRequired
 };

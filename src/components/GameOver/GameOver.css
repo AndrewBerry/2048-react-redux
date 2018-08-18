@@ -1,0 +1,9 @@
+.GameOver {
+  padding: 2em;
+  box-shadow: 0 0 100px 20px rgba(0, 0, 0, 0.5);
+}
+
+.GameOver__title {
+  margin: 0 0 1em 0;
+  text-align: center;
+}

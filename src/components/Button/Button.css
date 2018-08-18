@@ -11,3 +11,13 @@
   font-size: 1em;
   cursor: pointer;
 }
+
+.Button--block {
+  display: block;
+  width: 100%;
+}
+
+.Button--large {
+  padding: 0.8em;
+  font-size: 1.4em;
+}
