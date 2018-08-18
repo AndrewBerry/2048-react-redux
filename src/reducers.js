@@ -73,9 +73,12 @@ export const shiftBoard = (state, action) => {
     tileValue
   );
 
+  const newScore = state.score + moveScore;
+
   return {
     ...state,
-    score: state.score + moveScore,
+    score: newScore,
+    bestScore: Math.max(newScore, state.bestScore),
     board: boardWithTile,
     lastPRNGValue: tileValuePRNG,
     nextTileId: state.nextTileId + 1

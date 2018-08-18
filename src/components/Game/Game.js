@@ -12,6 +12,7 @@ import "./Game.css";
 export const Game = ({
   seed,
   score,
+  bestScore,
   tiles,
   gameSize,
   hasLost,
@@ -30,7 +31,7 @@ export const Game = ({
     <div className="Game__header">
       <h1 className="Game__title">2048</h1>
       <Scorebox className="Game__score" label="Score" score={score} />
-      <Scorebox className="Game__best" label="Best" score={score} />
+      <Scorebox className="Game__best" label="Best" score={bestScore} />
       <Button className="Game__new" onClick={newGame}>
         New Game
       </Button>

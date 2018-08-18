@@ -10,6 +10,7 @@ import { Game } from "../components/Game";
 
 const mapStateToProps = state => ({
   score: state.score,
+  bestScore: state.bestScore,
   tiles: reduceBoardToTiles(state.board),
   gameSize: state.board.length,
   seed: state.seed,

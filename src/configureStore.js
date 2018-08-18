@@ -1,14 +1,22 @@
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { rootReducer } from "./reducers";
 import { createNewGameAction } from "./actions";
+import { persistToStorage, getInitialState } from "./middleware/persistToStorage";
 
 export const configureStore = () => {
+  const initialState = getInitialState(window.localStorage);
+
   const store = createStore(
     rootReducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    initialState,
+    applyMiddleware(
+      persistToStorage(window.localStorage)
+    )
   );
 
-  store.dispatch(createNewGameAction(Date.now(), 4, 4, 2));
+  if (!initialState.board || !initialState.score) {
+    store.dispatch(createNewGameAction(Date.now(), 4, 4, 2));
+  }
 
   return store;
 };
