@@ -66,14 +66,6 @@ export class Board extends React.Component {
   }
 
   handleSwipeMove(e) {
-    if (this.props.hasLost) {
-      return;
-    }
-
-    e.preventDefault();
-  }
-
-  handleSwipeEnd(e) {
     if (!this.swipeStart || this.props.hasLost) {
       return;
     }
@@ -91,6 +83,15 @@ export class Board extends React.Component {
     this.throttledShiftBoard(
       absDeltaX > absDeltaY ? (deltaX > 0 ? "r" : "l") : deltaY > 0 ? "d" : "u"
     );
+    this.swipeStart = null;
+
+    e.preventDefault();
+  }
+
+  handleSwipeEnd(e) {
+    if (!this.swipeStart || this.props.hasLost) {
+      return;
+    }
   }
 
   componentDidMount() {
