@@ -13,9 +13,9 @@ export const TileStyle = ({ gameSize }) => {
       .Tile {"{"}
       width: {tileWidth - GAME_TILE_SPACING * 2}%; height:{" "}
       {tileWidth - GAME_TILE_SPACING * 2}%; margin: {GAME_TILE_SPACING}%;
-      animation: Tile__pop {GAME_MOVE_COOLDOWN * 2}ms ease-out; transition: top{" "}
-      {GAME_MOVE_COOLDOWN * 0.75}ms ease-out, left {GAME_MOVE_COOLDOWN * 0.75}ms
-      ease-out, transform {GAME_MOVE_COOLDOWN * 0.75}ms ease-in;
+      animation: Tile__pop {GAME_MOVE_COOLDOWN}ms ease-out; transition: top{" "}
+      {GAME_MOVE_COOLDOWN * 0.5}ms ease-out, left {GAME_MOVE_COOLDOWN * 0.5}ms
+      ease-out, transform {GAME_MOVE_COOLDOWN * 0.5}ms ease-in;
       {"}"}
     </style>
   );
